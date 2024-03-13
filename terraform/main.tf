@@ -2,7 +2,7 @@ provider "yandex" {
   token     = "AQAAAAAIkgGxAATuwW6RRMSneE2uuV6vpMTK0Jw"
   cloud_id  = "b1ghns2saijtpp8com7i"
   folder_id = "b1gb5mplcv6bu0g0eolj"
-  zone      = "ru-central1-a" # Выберите нужную зону
+  zone      = "ru-central1-a" 
 }
 
 resource "yandex_vpc" "my_vpc" {
@@ -11,8 +11,46 @@ resource "yandex_vpc" "my_vpc" {
   description = "Empty VPC"
 
   subnet {
-    name           = "subnet-1"
-    zone           = "ru-central1-a" # Выберите зону для подсети
-    v4_cidr_blocks = ["10.0.1.0/24"]
+    name           = "public"
+    zone           = "ru-central1-a" # зона для публичной подсети
+    v4_cidr_blocks = ["192.168.10.0/24"]
+  }
+
+  subnet {
+    name           = "private"
+    zone           = "ru-central1-a" # зона для приватной подсети
+    v4_cidr_blocks = ["192.168.20.0/24"]
+  }
+}
+
+resource "yandex_compute_instance" "nat_instance" {
+  name         = "nat-instance"
+  zone         = "ru-central1-a" # зона для NAT-инстанса
+  platform_id  = "standard-v1"
+  image_id     = "fd80mrhj8fl2oe87o4e1"
+  subnet_id    = yandex_vpc.my_vpc.subnet["public"].id
+  v4_address   = "192.168.10.254"
+}
+
+resource "yandex_compute_instance" "public_instance" {
+  name         = "public-instance"
+  zone         = "ru-central1-a" # зона для публичной виртуалки
+  platform_id  = "standard-v1"
+  subnet_id    = yandex_vpc.my_vpc.subnet["public"].id
+}
+
+resource "yandex_compute_instance" "private_instance" {
+  name         = "private-instance"
+  zone         = "ru-central1-a" # зона для приватной виртуалки
+  platform_id  = "standard-v1"
+  subnet_id    = yandex_vpc.my_vpc.subnet["private"].id
+}
+
+resource "yandex_vpc_route_table" "my_route_table" {
+  vpc_id = yandex_vpc.my_vpc.id
+
+  route {
+    dest_range = "0.0.0.0/0"
+    next_hop_instance = yandex_compute_instance.nat_instance.id
   }
 }
