@@ -34,7 +34,7 @@ variable "vpc_name" {
 ###yandex_compute_image vars
 variable "public_image" {
   type        = string
-  default     = "fd8pqclrbi85ektgehlf"
+  default     = "fd8h0tfeml79jtu3rq82"
   description = "Yandex.Compute image ID"
 }
 ###name VM vars
