@@ -1,3 +1,4 @@
+
 resource "yandex_vpc" "my_vpc" {
   name        = "my-vpc"
   folder_id   = var.yandex_folder_id
@@ -25,12 +26,22 @@ resource "yandex_compute_instance" "nat_instance" {
   v4_address   = "192.168.10.254"
 }
 
+data "yandex_compute_image" "public-ubuntu" {
+  image_id = var.public_image
+}
+
 resource "yandex_compute_instance" "public_instance" {
   name         = "public-instance"
   zone         = "ru-central1-a" # зона для публичной виртуалки
   platform_id  = "standard-v1"
   subnet_id    = yandex_vpc.my_vpc.subnet["public"].id
 }
+
+  boot_disk {
+    initialize_params {
+      image_id = data.yandex_compute_image.public-ubuntu.image_id
+    }
+  }
 
 resource "yandex_compute_instance" "private_instance" {
   name         = "private-instance"
