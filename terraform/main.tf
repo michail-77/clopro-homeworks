@@ -20,7 +20,7 @@ resource "yandex_compute_instance" "nat_instance" {
   name         = "nat-instance"
   zone         = "ru-central1-a" # зона для NAT-инстанса
   platform_id  = "standard-v1"
-  image_id     = "fd8h0tfeml79jtu3rq82"
+  image_id     = "fd80mrhj8fl2oe87o4e1"
   subnet_id    = yandex_vpc.my_vpc.subnet["public"].id
   v4_address   = "192.168.10.254"
 }
