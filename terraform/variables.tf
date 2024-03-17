@@ -1,13 +1,13 @@
 variable "yandex_cloud_id" {
-  default = "b1g4m8qmhdgh8k9b16jr"
+  default = "b1ghns2saijtpp8com7i"
 }
 
 variable "yandex_folder_id" {
-  default = "b1g72hofn0r6eom3l3oo"
+  default = "b1gb5mplcv6bu0g0eolj"
 }
 
 variable "a-zone" {
-  default = "ru-central1-c"
+  default = "ru-central1-a"
 }
 
 variable "nat-instance-image-id" {
@@ -18,12 +18,8 @@ variable "nat-instance-ip" {
   default = "192.168.10.254"
 }
 
-variable "centos-7-base" {
-  default = "fd88mqi0d02c7jbkest0"
-}
-
-variable "domain" {
-  default = "netology.cloud"
+variable "Ubuntu-22.04-LTS" {
+  default = "fd85u0rct32prepgjlv0"
 }
 
 variable "nat-instance-name" {

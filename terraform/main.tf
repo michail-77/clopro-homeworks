@@ -1,6 +1,6 @@
 resource "yandex_compute_instance" "nat-instance" {
   name     = var.nat-instance-name
-  hostname = "${var.nat-instance-name}.${var.domain}"
+  hostname = "${var.nat-instance-name}"
   zone     = var.a-zone
 
   resources {
@@ -11,9 +11,9 @@ resource "yandex_compute_instance" "nat-instance" {
   boot_disk {
     initialize_params {
       image_id    = var.nat-instance-image-id
-      name        = "root-${var.nat-instance-name}"
+      name        = "user-${var.nat-instance-name}"
       type        = "network-nvme"
-      size        = "50"
+      size        = "20"
     }
   }
 
@@ -30,7 +30,7 @@ resource "yandex_compute_instance" "nat-instance" {
 
 resource "yandex_compute_instance" "public-vm" {
   name     = var.public-vm-name
-  hostname = "${var.public-vm-name}.${var.domain}"
+  hostname = "${var.public-vm-name}"
   zone     = var.a-zone
 
   resources {
@@ -40,10 +40,10 @@ resource "yandex_compute_instance" "public-vm" {
 
   boot_disk {
     initialize_params {
-      image_id    = var.centos-7-base
-      name        = "root-${var.public-vm-name}"
+      image_id    = var.Ubuntu-2204-LTS
+      name        = "user-${var.public-vm-name}"
       type        = "network-nvme"
-      size        = "50"
+      size        = "20"
     }
   }
 
@@ -59,7 +59,7 @@ resource "yandex_compute_instance" "public-vm" {
 
 resource "yandex_compute_instance" "private-vm" {
   name     = var.private-vm-name
-  hostname = "${var.private-vm-name}.${var.domain}"
+  hostname = "${var.private-vm-name}"
   zone     = var.a-zone
 
   resources {
@@ -69,8 +69,8 @@ resource "yandex_compute_instance" "private-vm" {
 
   boot_disk {
     initialize_params {
-      image_id    = var.centos-7-base
-      name        = "root-${var.private-vm-name}"
+      image_id    = var.Ubuntu-2204-LTS
+      name        = "user-${var.private-vm-name}"
       type        = "network-nvme"
       size        = "50"
     }
