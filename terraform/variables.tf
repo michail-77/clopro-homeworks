@@ -1,5 +1,5 @@
 variable "yandex_cloud_id" {
-  default = "b1ghns2saijtpp8com7i"
+  default = var.cloud_id
 }
 
 variable "yandex_folder_id" {
