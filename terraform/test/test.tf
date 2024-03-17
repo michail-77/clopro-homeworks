@@ -17,7 +17,7 @@ provider "yandex" {
 
 # ресурс "yandex_compute_instance" т.е. сервер
 # Terraform будет знаеть его по имени "yandex_compute_instance.default"
-resource "yandex_compute_instance" "test-instance" { 
+resource "yandex_compute_instance" "test-instance" {
   name = "test-instance"
 	platform_id = "standard-v1" # тип процессора (Intel Broadwell)
 
