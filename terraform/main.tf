@@ -1,60 +1,87 @@
+resource "yandex_compute_instance" "nat-instance" {
+  name     = var.nat-instance-name
+  hostname = "${var.nat-instance-name}.${var.domain}"
+  zone     = var.a-zone
 
-resource "yandex_vpc" "my_vpc" {
-  name        = "my-vpc"
-  folder_id   = var.yandex_folder_id
-  description = "Empty VPC"
-
-  subnet {
-    name           = "public"
-    zone           = "ru-central1-a" # зона для публичной подсети
-    v4_cidr_blocks = ["192.168.10.0/24"]
+  resources {
+    cores  = 2
+    memory = 2
   }
-
-  subnet {
-    name           = "private"
-    zone           = "ru-central1-a" # зона для приватной подсети
-    v4_cidr_blocks = ["192.168.20.0/24"]
-  }
-}
-
-resource "yandex_compute_instance" "nat_instance" {
-  name         = "nat-instance"
-  zone         = "ru-central1-a" # зона для NAT-инстанса
-  platform_id  = "standard-v1"
-  image_id     = "fd80mrhj8fl2oe87o4e1"
-  subnet_id    = yandex_vpc.my_vpc.subnet["public"].id
-  v4_address   = "192.168.10.254"
-}
-
-data "yandex_compute_image" "public-ubuntu" {
-  image_id = var.public_image
-}
 
   boot_disk {
     initialize_params {
-      image_id = data.yandex_compute_image.public-ubuntu.image_id
+      image_id    = var.nat-instance-image-id
+      name        = "root-${var.nat-instance-name}"
+      type        = "network-nvme"
+      size        = "50"
     }
   }
 
-resource "yandex_compute_instance" "public_instance" {
-  name         = "public-instance"
-  zone         = "ru-central1-a" # зона для публичной виртуалки
-  platform_id  = "standard-v1"
-  subnet_id    = yandex_vpc.my_vpc.subnet["public"].id
+  network_interface {
+    subnet_id = yandex_vpc_subnet.subnet-public.id
+    ip_address = var.nat-instance-ip
+    nat       = true
+  }
+
+  metadata = {
+    ssh-keys = "ubuntu:${file("~/.ssh/id_rsa.pub")}"
+  }
 }
 
-resource "yandex_compute_instance" "private_instance" {
-  name         = "private-instance"
-  zone         = "ru-central1-a" # зона для приватной виртуалки
-  platform_id  = "standard-v1"
-  subnet_id    = yandex_vpc.my_vpc.subnet["private"].id
+resource "yandex_compute_instance" "public-vm" {
+  name     = var.public-vm-name
+  hostname = "${var.public-vm-name}.${var.domain}"
+  zone     = var.a-zone
+
+  resources {
+    cores  = 2
+    memory = 2
+  }
+
+  boot_disk {
+    initialize_params {
+      image_id    = var.centos-7-base
+      name        = "root-${var.public-vm-name}"
+      type        = "network-nvme"
+      size        = "50"
+    }
+  }
+
+  network_interface {
+    subnet_id = yandex_vpc_subnet.subnet-public.id
+    nat       = true
+  }
+
+  metadata = {
+    ssh-keys = "ubuntu:${file("~/.ssh/id_rsa.pub")}"
+  }
 }
 
-resource "yandex_vpc_route_table" "my_route_table" {
-  vpc_id = yandex_vpc.my_vpc.id
+resource "yandex_compute_instance" "private-vm" {
+  name     = var.private-vm-name
+  hostname = "${var.private-vm-name}.${var.domain}"
+  zone     = var.a-zone
 
-  route {
-    dest_range = "0.0.0.0/0"
-    next_hop_instance = yandex_compute_instance.nat_instance.id
+  resources {
+    cores  = 2
+    memory = 2
+  }
+
+  boot_disk {
+    initialize_params {
+      image_id    = var.centos-7-base
+      name        = "root-${var.private-vm-name}"
+      type        = "network-nvme"
+      size        = "50"
+    }
+  }
+
+  network_interface {
+    subnet_id = yandex_vpc_subnet.subnet-private.id
+    nat       = false
+  }
+
+  metadata = {
+    ssh-keys = "ubuntu:${file("~/.ssh/id_rsa.pub")}"
   }
 }

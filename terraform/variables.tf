@@ -1,113 +1,39 @@
-variable "token" {
-  type        = string
-  description = "Your Yandex.Cloud API token"
+variable "yandex_cloud_id" {
+  default = "b1g4m8qmhdgh8k9b16jr"
 }
 
-variable "cloud_id" {
-  type        = string
-  description = "Your Yandex.Cloud Cloud ID"
+variable "yandex_folder_id" {
+  default = "b1g72hofn0r6eom3l3oo"
 }
 
-variable "folder_id" {
-  type        = string
-  description = "Your Yandex.Cloud Folder ID"
+variable "a-zone" {
+  default = "ru-central1-c"
 }
 
-variable "default_zone" {
-  type        = string
-  default     = "ru-central1-a"
-  description = "Default zone for resources"
+variable "nat-instance-image-id" {
+  default = "fd80mrhj8fl2oe87o4e1"
 }
 
-variable "default_cidr" {
-  type        = list(string)
-  default     = ["192.168.10.0/24"]
-  description = "https://cloud.yandex.ru/docs/vpc/operations/subnet-create"
+variable "nat-instance-ip" {
+  default = "192.168.10.254"
 }
 
-variable "vpc_name" {
-  type        = string
-  default     = "develop"
-  description = "VPC network & subnet name"
+variable "centos-7-base" {
+  default = "fd88mqi0d02c7jbkest0"
 }
 
-###yandex_compute_image vars
-variable "public_image" {
-  type        = string
-  default     = "fd8h0tfeml79jtu3rq82"
-  description = "Yandex.Compute image ID"
-}
-###name VM vars
-variable "public_name" {
-  type        = string
-  default     = "public"
-  description = "VM1 name"
+variable "domain" {
+  default = "netology.cloud"
 }
 
-###public_resources var
-
-variable "public_resources" {
-  type = map(number)
-  default = {
-    cores          = 2
-    memory         = 2
-    core_fraction  = 20
- }
+variable "nat-instance-name" {
+  default = "nat-instance-vm1"
 }
 
-### Vm nat
-
-###yandex_compute_image vars
-variable "nat_image" {
-  type        = string
-  default     = "fd80mrhj8fl2oe87o4e1"
-  description = "Yandex.Compute image ID"
-}
-###name VM vars
-variable "nat_name" {
-  type        = string
-  default     = "nat"
-  description = "VM2 name"
+variable "public-vm-name" {
+  default = "public-vm1"
 }
 
-###nat_resources var
-
-variable "nat_resources" {
-  type = map(number)
-  default = {
-    cores          = 2
-    memory         = 2
-    core_fraction  = 20
- }
-}
-
-### Private
-
-variable "default_cidr_private" {
-  type        = list(string)
-  default     = ["192.168.20.0/24"]
-}
-
-###yandex_compute_image vars
-variable "private_image" {
-  type        = string
-  default     = "fd8pqclrbi85ektgehlf"
-  description = "Yandex.Compute image ID"
-}
-###name VM vars
-variable "private_name" {
-  type        = string
-  default     = "private"
-  description = "VM3 name"
-}
-
-###nat_resources var
-
-variable "private_resources" {
-  type = map(number)
-  default = {
-    cores          = 2
-    memory         = 2
-    core_fraction  = 20
- }
+variable "private-vm-name" {
+  default = "private-vm1"
 }
