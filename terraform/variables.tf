@@ -18,7 +18,7 @@ variable "nat-instance-ip" {
   default = "192.168.10.254"
 }
 
-variable "Ubuntu-22.04-LTS" {
+variable "Ubuntu-2204-LTS" {
   default = "fd85u0rct32prepgjlv0"
 }
 
