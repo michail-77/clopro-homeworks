@@ -29,12 +29,12 @@ resource "yandex_compute_instance" "default" {
 
   boot_disk {
     initialize_params {
-      image_id = "fd8v0s6adqu3ui3rsuap" # ОС (Ubuntu, 22.04 LTS)
+      image_id = "fd85u0rct32prepgjlv0" # ОС (Ubuntu, 22.04 LTS)
     }
   }
 
   network_interface {
-    subnet_id = "e9bdgo95ucmut6r7pioq" # одна из дефолтных подсетей
+    subnet_id = "e2lf943cj2gimcrfa3cm" # одна из дефолтных подсетей
     nat = true # автоматически установить динамический ip
   }
 }
