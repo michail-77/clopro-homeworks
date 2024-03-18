@@ -60,7 +60,7 @@ resource "yandex_compute_instance" "public-vm" {
 
   metadata = {
     ssh-keys = "ubuntu:${file("~/.ssh/id_rsa.pub")}"
-    ssh-keys = "ubuntu:${file("~/.ssh/id_rsa")}"
+#    ssh-keys = "ubuntu:${file("~/.ssh/id_rsa")}"
   }  
 }
 
