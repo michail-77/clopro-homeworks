@@ -1,3 +1,14 @@
+ resource "yandex_iam_service_account" "sa" {
+   name        = "my-robot"
+   description = "this is my favorite service account"
+ }
+
+ resource "yandex_iam_service_account_static_access_key" "sa-static-key" {
+ service_account_id = "aje0af44ll0amdkj1nlb"
+ description        = "service_account_static_access_key"
+ pgp_key            = "keybase:keybaseusername"
+ }
+
 resource "yandex_compute_instance" "nat-instance" {
   name     = var.nat-instance-name
   hostname = "${var.nat-instance-name}"
