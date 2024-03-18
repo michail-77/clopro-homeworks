@@ -76,7 +76,7 @@ resource "yandex_compute_instance" "private-vm" {
   boot_disk {
     initialize_params {
       image_id    = var.Ubuntu-2204-LTS
-      name        = "user-${var.private-vm-name}"
+      name        = "ubuntu-${var.private-vm-name}"
       type        = "network-nvme"
       size        = "20"
     }
