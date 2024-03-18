@@ -30,7 +30,7 @@ resource "yandex_compute_instance" "nat-instance" {
   }
 
   metadata = {
-    ssh-keys = "ubuntu:${file("~/.ssh/id_rsa.pub")}"
+    ssh-keys = "ubuntu:${file("root/.ssh/id_rsa.pub")}"
   }
 }
 
@@ -59,7 +59,7 @@ resource "yandex_compute_instance" "public-vm" {
   }
 
   metadata = {
-    ssh-keys = "ubuntu:${file("~/.ssh/id_rsa.pub")}"
+    ssh-keys = "ubuntu:${file("root/.ssh/id_rsa.pub")}"
   }
 }
 
@@ -88,6 +88,6 @@ resource "yandex_compute_instance" "private-vm" {
   }
 
   metadata = {
-    ssh-keys = "ubuntu:${file("~/.ssh/id_rsa.pub")}"
+    ssh-keys = "ubuntu:${file("root/.ssh/id_rsa.pub")}"
   }
 }
