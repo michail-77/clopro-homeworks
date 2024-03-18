@@ -1,14 +1,4 @@
-variable "yandex_token" {
-  default = var.token
-}
 
-variable "yandex_cloud_id" {
-  default = var.cloud_id
-}
-
-variable "yandex_folder_id" {
-  default = "b1gb5mplcv6bu0g0eolj"
-}
 
 variable "a-zone" {
   default = "ru-central1-a"
