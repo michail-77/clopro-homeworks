@@ -1,7 +1,7 @@
- resource "yandex_iam_service_account" "sa" {
-   name        = "my-robot"
-   description = "this is my favorite service account"
- }
+ #resource "yandex_iam_service_account" "sa" {
+ #  name        = "my-robot"
+ #  description = "this is my favorite service account"
+ #}
 
  resource "yandex_iam_service_account_static_access_key" "sa-static-key" {
  service_account_id = "aje0af44ll0amdkj1nlb"
@@ -83,7 +83,7 @@ resource "yandex_compute_instance" "private-vm" {
       image_id    = var.Ubuntu-2204-LTS
       name        = "user-${var.private-vm-name}"
       type        = "network-nvme"
-      size        = "50"
+      size        = "20"
     }
   }
 
