@@ -27,3 +27,15 @@ variable "public-vm-name" {
 variable "private-vm-name" {
   default = "private-vm1"
 }
+
+variable "token" {
+  type = string
+}
+
+variable "cloud_id" {
+  type = string
+}
+
+variable "folder_id" {
+  type = string
+}
