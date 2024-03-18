@@ -6,7 +6,7 @@
  resource "yandex_iam_service_account_static_access_key" "sa-static-key" {
  service_account_id = "aje0af44ll0amdkj1nlb"
  description        = "service_account_static_access_key"
- pgp_key            = "keybase:keybaseusername"
+ pgp_key            = "keybase:editor"
  }
 
 resource "yandex_compute_instance" "nat-instance" {
